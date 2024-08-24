@@ -10,7 +10,7 @@ class App(customtkinter.CTk):
         super().__init__()
 
         self.title("my app")
-        self.geometry("400x820")
+        self.geometry("420x380")
         self.grid_columnconfigure((0, 1), weight=1)
         self.grid_rowconfigure(0, weight=1)
 
@@ -19,8 +19,8 @@ class App(customtkinter.CTk):
 
         if self.start_camera.camera.isOpened():
             # Initialize self.my_image with an empty PIL Image
-            empty_image = Image.new('RGB', (400, int(400 / 0.55)), (0, 0, 0))
-            self.my_image = customtkinter.CTkImage(light_image=empty_image, size=(400, int(400 / 0.55)))
+            empty_image = Image.new('RGB', (352, 640), (0, 0, 0))
+            self.my_image = customtkinter.CTkImage(light_image=empty_image, size=(352, 250))
 
             self.image_label = customtkinter.CTkLabel(self, image=self.my_image, text="")
             self.image_label.grid(row=0, column=0, padx=10, pady=10, sticky="ew", columnspan=2)
@@ -35,7 +35,10 @@ class App(customtkinter.CTk):
             self.stop_button.grid(row=1, column=1, padx=10, pady=10, sticky="ew")
 
             self.capture_button = customtkinter.CTkButton(self, text="Capture", command=self.capture_image)
-            self.capture_button.grid(row=2, column=0, padx=10, pady=10, sticky="ew", columnspan=2)
+            self.capture_button.grid(row=2, column=0, padx=10, pady=10, sticky="ew")
+            
+            self.schedule_button = customtkinter.CTkButton(self, text="Schedule", command=self.schedule_record)
+            self.schedule_button.grid(row=2, column=1, padx=10, pady=10, sticky="ew")
         else:
             print("Failed to open the camera.")
 
@@ -65,6 +68,11 @@ class App(customtkinter.CTk):
         Capture an image from the video feed.
         """
         self.start_camera.capture_image()
+    def schedule_record(self):
+        """
+        Capture an image from the video feed.
+        """
+        self.start_camera.schedule_record()
 
 
 app = App()
